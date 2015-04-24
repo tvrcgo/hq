@@ -1,0 +1,22 @@
+{
+  "name": "hq",
+  "version": "0.0.1",
+  "description": "flexible data fetcher.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tvrcgo/hq.git"
+  },
+  "keywords": [
+    "hq"
+  ],
+  "author": "tvrcgo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tvrcgo/hq/issues"
+  },
+  "homepage": "https://github.com/tvrcgo/hq"
+}
