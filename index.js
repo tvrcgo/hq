@@ -23,6 +23,15 @@ hq.use = function(mw){
 	if ( mw && 'GeneratorFunction' == mw.constructor.name ) {
 		this.middleware.push(mw);
 	}
+
+	// mount other hq
+	if ( mw && mw instanceof HQ) {
+		this.middleware.push(function *(next){
+			yield compose(mw.middleware);
+			yield next;
+		});
+	}
+
 	return this;
 }
 
@@ -34,6 +43,7 @@ hq.start = function(){
 	fn.call(this).catch(this.onerror);
 };
 
+
 /* Final process */
 function *process(next){
 	yield *next;
@@ -43,9 +53,9 @@ function *process(next){
 
 /* Compose middlewares */
 function compose(middleware){
-	return function *(){
+	return function *(_next){
 		var i = middleware.length;
-		var next = function *(){};
+		var next = _next || function *(){};
 		var mw;
 
 		while (i--) {
