@@ -6,7 +6,6 @@ var Emitter = require('events').EventEmitter;
 var HQ = module.exports = function(){
 	if (!(this instanceof HQ)) return new HQ;
 	this.middleware = [];
-	this.data = [];
 }
 
 
