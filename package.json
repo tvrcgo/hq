@@ -1,7 +1,7 @@
 {
   "name": "hq",
-  "version": "0.0.1",
-  "description": "flexible data fetcher.",
+  "version": "0.0.2",
+  "description": "middleware framework.",
   "main": "index.js",
   "scripts": {
     "test": "mocha test.js"
