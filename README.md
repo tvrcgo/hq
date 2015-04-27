@@ -1,6 +1,8 @@
 # hq
 
-中件间任务框架。
+流处理中件间框架。
+
+[![npm version](https://badge.fury.io/js/hq.svg)](http://badge.fury.io/js/hq)
 
 ## Installation
 
@@ -10,11 +12,19 @@ npm install hq
 
 ## Usage
 
-### 添加中间件
+### 流式输入数据
 
 ```js
 var hq = require('hq');
+var request = require('request');
 
+var h1 = hq();
+request('http://movie.douban.com/').pipe(h1);
+```
+
+### 添加中间件
+
+```js
 var h1 = hq();
 
 h1.use(function *(next){

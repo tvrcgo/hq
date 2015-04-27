@@ -1,7 +1,7 @@
 {
   "name": "hq",
-  "version": "0.0.2",
-  "description": "middleware framework.",
+  "version": "0.0.3",
+  "description": "stream middleware framework.",
   "main": "index.js",
   "scripts": {
     "test": "mocha test.js"
@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/tvrcgo/hq/issues"
   },
-  "homepage": "https://github.com/tvrcgo/hq"
+  "homepage": "https://github.com/tvrcgo/hq",
+  "dependencies": {
+    "co": "^4.5.2"
+  }
 }

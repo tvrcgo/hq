@@ -1,24 +1,37 @@
 
 var co = require('co');
-var Emitter = require('events').EventEmitter;
+var Transform = require('stream').Transform;
 
 /**
 * Constructor 
 */
 var HQ = module.exports = function(){
 	if (!(this instanceof HQ)) return new HQ;
+	Transform.call(this);
 	this.middleware = [];
+	this.buffer = [];
 }
+
+/**
+* Inherit from `Transform.prototype`. 
+*/
+Object.setPrototypeOf(HQ.prototype, Transform.prototype);
 
 /**
 * Prototype 
 */
 var hq = HQ.prototype;
 
-/**
-* Inherit from `Emitter.prototype`. 
-*/
-Object.setPrototypeOf(HQ.prototype, Emitter.prototype);
+hq._transform = function(chunk, encoding, done){
+	this.buffer.push(chunk);
+	done();
+}
+
+hq._flush = function(done){
+	this.push(Buffer.concat(this.buffer));
+	this.start();
+	done();
+}
 
 /**
 * Add middleware 
@@ -40,7 +53,7 @@ hq.use = function(){
 	// merge other hq middlewares
 	if (mw && mw instanceof HQ) {
 		this.middleware.push(function *(next){
-			yield *compose(mw.middleware).call(this, next);
+			yield compose(mw.middleware).call(this, next);
 		});
 	}
 
@@ -63,7 +76,7 @@ hq.mix = function(hq){
 }
 
 /**
-* Process start. 
+* Process middlewares. 
 */
 hq.start = function(){
 	var mw = [process].concat(this.middleware);
