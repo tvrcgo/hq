@@ -1,6 +1,6 @@
 # hq
 
-流处理中件间框架
+流处理中间件框架
 
 [![npm version](https://badge.fury.io/js/hq.svg)](http://badge.fury.io/js/hq)
 
@@ -34,6 +34,7 @@ h1.use(function *(next){
 });
 
 // 一次添加多个
+
 h1.use(function *(next){
 	yield next;
 	console.log('h1-2');
@@ -110,7 +111,7 @@ request('http://example.com/').pipe(h1).pipe(some_writable_stream);
 
 ### 2. 重用流
 
-`exec()` 默认 stream 只能使用一次，重用流可以实现类似多个流对它的写入，达到重用中件间的目的。
+`exec()` 默认 stream 只能使用一次，重用流可以实现类似多个流对它的写入，达到重用中间件的目的。
 
 ```js
 [url1, url2, url3].forEach(function(url){
@@ -127,7 +128,6 @@ h1.on('error', function(err){
 	console.log(err);
 });
 ```
-
 
 ## License
 
