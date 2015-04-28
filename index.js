@@ -28,8 +28,8 @@ hq._transform = function(chunk, encoding, done){
 }
 
 hq._flush = function(done){
+	this.exec_middleware();
 	this.push(Buffer.concat(this.buffer));
-	this.start();
 	done();
 }
 
@@ -47,7 +47,7 @@ hq.use = function(){
 
 	// use multiple middlewares
 	if ( mw && mw.length && 'Array' == mw.constructor.name ) {
-		this.middleware = mw.concat(this.middleware);
+		this.middleware = this.middleware.concat(mw);
 	}
 
 	// merge other hq middlewares
@@ -78,13 +78,22 @@ hq.mix = function(hq){
 /**
 * Process middlewares. 
 */
-hq.start = function(){
+hq.exec_middleware = function(){
 	var mw = [process].concat(this.middleware);
 	var fn = co.wrap(compose(mw));
 	var self = this;
 	fn.call(this).catch(function(err){
 		self.emit('error', err);
 	});
+};
+
+/**
+* Clone stream for reusage.
+*/
+hq.exec = function(){
+	var hq = HQ();
+	hq.use(this.middleware);
+	return hq;
 };
 
 /**
