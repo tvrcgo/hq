@@ -91,7 +91,7 @@ hq.exec_middleware = function(){
 * Clone stream for reusage.
 */
 hq.exec = function(){
-	var hq = HQ();
+	var hq = new this.constructor;
 	hq.use(this.middleware);
 	return hq;
 };
